@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -10,12 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'balancesheet/assets/images/favicon.png' %}">
-    <title>SlowBooks</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'balancesheet/assets/extra-libs/multicheck/multicheck.css' %}">
-    <link href="{% static 'balancesheet/assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
-    <link href="{% static 'balancesheet/dist/css/style.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/extra-libs/multicheck/multicheck.css">
+    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="dist/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -54,21 +53,21 @@
                         <b class="logo-icon p-l-10">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{% static 'balancesheet/assets/images/logo-icon.png' %}" alt="homepage" class="light-logo" />
+                            <img src="assets/images/logo-icon.png" alt="homepage" class="light-logo" />
                            
                         </b>
                         <!--End Logo icon -->
                          <!-- Logo text -->
                         <span class="logo-text">
                              <!-- dark Logo text -->
-                             <img src="{% static 'balancesheet/assets/images/logo-text.png' %}" alt="homepage" class="light-logo" />
+                             <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" />
                             
                         </span>
                         <!-- Logo icon -->
                         <!-- <b class="logo-icon"> -->
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <!-- <img src="{% static 'balancesheet/assets/images/logo-text.png' %}" alt="homepage" class="light-logo" /> -->
+                            <!-- <img src="assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
                             
                         <!-- </b> -->
                         <!--End Logo icon -->
@@ -197,7 +196,7 @@
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'balancesheet/assets/images/users/1.jpg' %}" alt="user" class="rounded-circle" width="31"></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                                 <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> My Balance</a>
@@ -287,10 +286,10 @@
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-             <div class="page-breadcrumb">
+            <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Dashboard</h4>
+                        <h4 class="page-title">Tables</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -310,103 +309,8 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
-                <!-- Sales Cards  -->
+                <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
-                                <h6 class="text-white">Dashboard</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-4 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
-                                <h6 class="text-white">Charts</h6>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Widgets</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-danger text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                                <h6 class="text-white">Tables</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-info text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-arrow-all"></i></h1>
-                                <h6 class="text-white">Full Width</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-4 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-danger text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-receipt"></i></h1>
-                                <h6 class="text-white">Forms</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-info text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-relative-scale"></i></h1>
-                                <h6 class="text-white">Buttons</h6>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-pencil"></i></h1>
-                                <h6 class="text-white">Elements</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-calendar-check"></i></h1>
-                                <h6 class="text-white">Calnedar</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-2 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-alert"></i></h1>
-                                <h6 class="text-white">Errors</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                </div>
-
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -416,12 +320,7 @@
                                     <table id="zero_config" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    <label class="customcheckbox m-b-20">
-                                                    <input type="checkbox" id="mainCheckbox" />
-                                                    <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
+                                                <th></th>
                                                 <th>Name</th>
                                                 <th>Position</th>
                                                 <th>Office</th>
@@ -433,8 +332,8 @@
                                         <tbody>
                                             <tr>
                                                 <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
+                                                    <label class="customcheckbox m-b-20">
+                                                        <input type="checkbox" id="mainCheckbox" />
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
@@ -447,8 +346,8 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
+                                                    <label class="customcheckbox m-b-20">
+                                                        <input type="checkbox" id="mainCheckbox" />
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
@@ -461,8 +360,8 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
+                                                    <label class="customcheckbox m-b-20">
+                                                        <input type="checkbox" id="mainCheckbox" />
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
@@ -523,6 +422,16 @@
                         </div>
                     </div>
                 </div>
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -547,22 +456,23 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{% static 'balancesheet/assets/libs/jquery/dist/jquery.min.js' %}"></script>
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{% static 'balancesheet/assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
-    <script src="{% static 'balancesheet/assets/libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'balancesheet/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>
-    <script src="{% static 'balancesheet/assets/extra-libs/sparkline/sparkline.js' %}"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
     <!--Wave Effects -->
-    <script src="{% static 'balancesheet/dist/js/waves.js' %}"></script>
+    <script src="dist/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="{% static 'balancesheet/dist/js/sidebarmenu.js' %}"></script>
+    <script src="dist/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="{% static 'balancesheet/dist/js/custom.min.js' %}"></script>
-    <!--This page JavaScript -->
-    <script src="{% static 'balancesheet/assets/extra-libs/multicheck/datatable-checkbox-init.js' %}"></script>
-    <script src="{% static 'balancesheet/assets/extra-libs/multicheck/jquery.multicheck.js' %}"></script>
-    <script src="{% static 'balancesheet/assets/extra-libs/DataTables/datatables.min.js' %}"></script>
+    <script src="dist/js/custom.min.js"></script>
+    <!-- this page js -->
+    <script src="assets/extra-libs/multicheck/datatable-checkbox-init.js"></script>
+    <script src="assets/extra-libs/multicheck/jquery.multicheck.js"></script>
+    <script src="assets/extra-libs/DataTables/datatables.min.js"></script>
     <script>
         /****************************************
          *       Basic Table                   *
