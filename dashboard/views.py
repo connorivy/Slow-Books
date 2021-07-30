@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import employees
 from .forms import addEmployee
 
@@ -11,9 +12,10 @@ def employees(request):
         form = addEmployee(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Account created for {username}!')
-            return redirect('dashboard-home')
+            fname = form.cleaned_data.get('fname')
+            lname = form.cleaned_data.get('lname')
+            messages.success(request, f'{fname} {lname} added to employees')
+            # return redirect('dashboard-employees')
     else:
         form = addEmployee()
 

@@ -6,7 +6,11 @@ from crispy_forms.helper import FormHelper
 class UserRegisterForm(UserCreationForm):
     helper = FormHelper()
     helper.form_show_labels = False
-    email = forms.EmailField()
+    # email = forms.EmailField()
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': 'Email Address', 'class': 'form-control'})
+    )
 
     class Meta:
         model = User

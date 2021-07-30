@@ -53,9 +53,9 @@
                 </div>
 
                 <div class="card" id="form1" style="display: none;">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST">
                         <div class="card-body">
-                            <h4 class="card-title">Add Employee</h4>
+                            <h4 class="card-title">Add Employee</h4>{% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
@@ -102,7 +102,7 @@
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Zip Code</label>
                                         <div class="col-sm-9">
-                                            {{ form.zip|as_crispy_field }}
+                                            {{ form.zipcode|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -114,13 +114,13 @@
                                     <div class="form-group row">
                                         <label for="email1" class="col-sm-3 text-right control-label col-form-label">Withholdings</label>
                                         <div class="col-sm-9">
-                                            {{ form.hold|as_crispy_field }}
+                                            {{ form.withholding|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Salary</label>
                                         <div class="col-sm-9">
-                                            {{ form.sal|as_crispy_field }}
+                                            {{ form.salary|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="border-top">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary" value='POST'>Submit</button>
+                                <button type="submit" class="btn btn-primary" value='POST'>Submit</button>
                             </div>
                         </div>
                     </form>
