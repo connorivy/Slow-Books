@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import employees
+from .models import employee
 from .forms import addEmployee
 
 # Create your views here.
@@ -19,5 +19,11 @@ def employees(request):
     else:
         form = addEmployee()
 
-    return render(request, 'dashboard/employees.html', {'form': form})
+    context = {
+        'form': form,
+        'employees': employee.objects.all().values()
+    }
+    print(context['employees'])
+
+    return render(request, 'dashboard/employees.html', context)
     # return render(request, 'dashboard/employees.html')
