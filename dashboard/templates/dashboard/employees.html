@@ -1,6 +1,8 @@
 {% extends "dashboard/base.html" %}
-{% block content %}
 {% load static %}
+{% load crispy_forms_tags %}
+{% crispy form form.helper %}
+{% block content %}
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -55,41 +57,41 @@
                         <div class="card-body">
                             <h4 class="card-title">Add Employee</h4>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="fname" placeholder="First Name Here">
+                                            {{ form.fname|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="lname" placeholder="Last Name Here">
+                                            {{ form.lname|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Address 1</label>
                                         <div class="col-sm-9">
-                                            <input type="password" class="form-control" id="add1" placeholder="Password Here">
+                                            {{ form.add1|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="email1" class="col-sm-3 text-right control-label col-form-label">Address 2</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="add2" placeholder="Company Name Here">
+                                            {{ form.add2|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">City</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="city" placeholder="Contact No Here">
+                                            {{ form.city|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="cono1" class="col-sm-3 text-right control-label col-form-label">State</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="state" placeholder="Contact No Here">
+                                            {{ form.state|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +137,7 @@
                         </div>
                         <div class="border-top">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary">Submit</button>
+                                <button type="button" class="btn btn-primary" value='POST'>Submit</button>
                             </div>
                         </div>
                     </form>
