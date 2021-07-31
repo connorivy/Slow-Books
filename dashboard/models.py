@@ -37,3 +37,23 @@ class customer(models.Model):
     def __str__(self):
         return f'{self.fname} {self.lname}'
 
+class vendor(models.Model):
+    bizname = models.CharField(max_length=25)
+    part = models.CharField(max_length=25)
+    cost = models.DecimalField(max_digits=10, decimal_places=4)
+    fname = models.CharField(max_length=25, null=True, blank=True)
+    lname = models.CharField(max_length=25, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
+    phone = models.CharField(validators = [phoneNumberRegex], max_length = 16, unique = True, null=True, blank=True, default=None)
+    add1 = models.CharField(max_length=50, null=True, blank=True)
+    add2 = models.CharField(max_length=10, null=True, blank=True)
+    city = models.CharField(max_length=20, null=True, blank=True)
+    state = models.CharField(max_length=20, null=True, blank=True)
+    zipcode = models.IntegerField(null=True, blank=True)
+    date_added = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.fname} {self.lname}'
+
+

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import employee, customer
-from .forms import addEmployee, addCustomer
+from .models import employee, customer, vendor
+from .forms import addEmployee, addCustomer, addVendor
 
 # Create your views here.
 def home(request):
@@ -44,3 +44,22 @@ def customers(request):
     }
 
     return render(request, 'dashboard/customers.html', context)
+
+def vendors(request):
+    if request.method == 'POST':
+        form = addVendor(request.POST)
+        if form.is_valid():
+            form.save()
+            bizname = form.cleaned_data.get('bizname')
+            messages.success(request, f'{bizname} added to vendors')
+            # return redirect('dashboard-vendors')
+    else:
+        form = addVendor()
+
+    context = {
+        'form': form,
+        'vendors': vendor.objects.all().values()
+    }
+    print(context['vendors'])
+
+    return render(request, 'dashboard/vendors.html', context)
