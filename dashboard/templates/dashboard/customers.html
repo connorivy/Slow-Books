@@ -9,12 +9,12 @@
              <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">Employees</h4>
+                        <h4 class="page-title">Customers</h4>
                         <div class="ml-auto text-right">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Employees</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Customers</li>
                                 </ol>
                             </nav>
                         </div>
@@ -55,7 +55,7 @@
                 <div class="card" id="form1" style="display: none;">
                     <form class="form-horizontal" method="POST">
                         <div class="card-body">
-                            <h4 class="card-title">Add Employee</h4>{% csrf_token %}
+                            <h4 class="card-title">Add Customer</h4>{% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group row">
@@ -71,21 +71,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Address 1</label>
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Email Address</label>
                                         <div class="col-sm-9">
-                                            {{ form.add1|as_crispy_field }}
+                                            {{ form.email|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">Address 2</label>
+                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">Phone Number</label>
                                         <div class="col-sm-9">
-                                            {{ form.add2|as_crispy_field }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">City</label>
-                                        <div class="col-sm-9">
-                                            {{ form.city|as_crispy_field }}
+                                            {{ form.phone|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -93,6 +87,24 @@
                                 <!-- End left Col  -->
                                 <!-- ============================================================== -->
                                 <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address 1</label>
+                                        <div class="col-sm-9">
+                                            {{ form.add1|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address 2</label>
+                                        <div class="col-sm-9">
+                                            {{ form.add2|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
+                                        <div class="col-sm-9">
+                                            {{ form.city|as_crispy_field }}
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
                                         <div class="col-sm-9">
@@ -103,24 +115,6 @@
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Zip Code</label>
                                         <div class="col-sm-9">
                                             {{ form.zipcode|as_crispy_field }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">SSN</label>
-                                        <div class="col-sm-9">
-                                            {{ form.ssn|as_crispy_field }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="email1" class="col-sm-3 text-right control-label col-form-label">Withholdings</label>
-                                        <div class="col-sm-9">
-                                            {{ form.withholding|as_crispy_field }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Salary</label>
-                                        <div class="col-sm-9">
-                                            {{ form.salary|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -154,18 +148,18 @@
                                                 </th>
                                                 <th>First Name</th>
                                                 <th>Last Name</th>
+                                                <th>Email Address</th>
+                                                <th>Phone Number</th>
                                                 <th>Address 1</th>
                                                 <th>Address 2</th>
                                                 <th>City</th>
                                                 <th>State</th>
                                                 <th>Zip Code</th>
-                                                <th>SSN</th>
-                                                <th>Withholdings</th>
-                                                <th>Salary</th>
+                                                <th>Date Added</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for employee in employees %}
+                                            {% for customer in customers %}
                                             <tr>
                                                 <th>
                                                     <label class="customcheckbox">
@@ -173,8 +167,8 @@
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
-                                                {% for key,value in employee.items %}
-                                                    {% if key != 'id' and key != 'employer_id' %}
+                                                {% for key,value in customer.items %}
+                                                    {% if key != 'id' %}
                                                         <td>{{ value }}</td>
                                                     {% endif %}
                                                 {% endfor %}
