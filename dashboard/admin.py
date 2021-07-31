@@ -5,3 +5,4 @@ from .models import employee, customer, vendor
 admin.site.register(employee)
 admin.site.register(customer)
 admin.site.register(vendor)
+# admin.site.register(invoice)

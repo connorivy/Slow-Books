@@ -44,6 +44,14 @@
                     <!-- Column -->
                     <div class="col-md-6 col-lg-3 col-xlg-3">
                         <div class="card card-hover">
+                            <div class="box bg-success text-center" onclick="showForm('form2'); getCheck()">
+                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
+                                <h6 class="text-white">Create Invoice</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
                             <div class="box bg-success text-center" onclick="showForm('form2')">
                                 <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
                                 <h6 class="text-white">Remove</h6>
@@ -51,7 +59,10 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <!-- ============================================================== -->
+                <!-- End Add Customer Form -->
+                <!-- ============================================================== -->
                 <div class="card" id="form1" style="display: none;">
                     <form class="form-horizontal" method="POST">
                         <div class="card-body">
@@ -130,6 +141,17 @@
                         </div>
                     </form>
                 </div>
+                <!-- ============================================================== -->
+                <!-- End Add Customer Form -->
+                <!-- ============================================================== -->
+                
+                <!-- ============================================================== -->
+                <!-- Start Create Invoice Form -->
+                <!-- ============================================================== -->
+                
+                <!-- ============================================================== -->
+                <!-- End Create Invoice Form -->
+                <!-- ============================================================== -->
 
                 <div class="row">
                     <div class="col-12">
@@ -163,7 +185,7 @@
                                             <tr>
                                                 <th>
                                                     <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
+                                                        <input type="checkbox" class="listCheckbox" value="{{ customer.id }}"/>
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>

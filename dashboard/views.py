@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import employee, customer, vendor
-from .forms import addEmployee, addCustomer, addVendor
+from .forms import addEmployee, addCustomer, addVendor, MyForm
 
 # Create your views here.
 def home(request):
@@ -63,3 +63,16 @@ def vendors(request):
     print(context['vendors'])
 
     return render(request, 'dashboard/vendors.html', context)
+
+def invoice(request):
+    return render(request, 'dashboard/invoice.html')
+
+def myview(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST, extra=request.POST.get('extra_field_count'))
+        if form.is_valid():
+            print("valid!")
+    else:
+        form = MyForm()
+        
+    return render(request, "dashboard/test.html", { 'form': form })
