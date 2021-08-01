@@ -72,25 +72,25 @@
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
                                         <div class="col-sm-9">
-                                            {{ form.fname|as_crispy_field }}
+                                            {{ customerform.fname|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
                                         <div class="col-sm-9">
-                                            {{ form.lname|as_crispy_field }}
+                                            {{ customerform.lname|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Email Address</label>
                                         <div class="col-sm-9">
-                                            {{ form.email|as_crispy_field }}
+                                            {{ customerform.email|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="email1" class="col-sm-3 text-right control-label col-form-label">Phone Number</label>
                                         <div class="col-sm-9">
-                                            {{ form.phone|as_crispy_field }}
+                                            {{ customerform.phone|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -101,31 +101,31 @@
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address 1</label>
                                         <div class="col-sm-9">
-                                            {{ form.add1|as_crispy_field }}
+                                            {{ customerform.add1|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Address 2</label>
                                         <div class="col-sm-9">
-                                            {{ form.add2|as_crispy_field }}
+                                            {{ customerform.add2|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">City</label>
                                         <div class="col-sm-9">
-                                            {{ form.city|as_crispy_field }}
+                                            {{ customerform.city|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">State</label>
                                         <div class="col-sm-9">
-                                            {{ form.state|as_crispy_field }}
+                                            {{ customerform.state|as_crispy_field }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="lname" class="col-sm-3 text-right control-label col-form-label">Zip Code</label>
                                         <div class="col-sm-9">
-                                            {{ form.zipcode|as_crispy_field }}
+                                            {{ customerform.zipcode|as_crispy_field }}
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +148,48 @@
                 <!-- ============================================================== -->
                 <!-- Start Create Invoice Form -->
                 <!-- ============================================================== -->
-                
+                <div class="card" id="form2" style="display: none;">
+                    <form class="form-horizontal" method="POST">
+                        <div class="card-body">
+                            <h4 class="card-title">Create Invoice</h4>{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            {{ invoiceform.part|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            {{ invoiceform.cost|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ============================================================== -->
+                                <!-- End left col  -->
+                                <!-- ============================================================== -->
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Email Address</label>
+                                        <div class="col-sm-9">
+                                            {{ invoiceform.quant|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ============================================================== -->
+                                <!-- End right col  -->
+                                <!-- ============================================================== -->
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary" value='POST'>Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <!-- ============================================================== -->
                 <!-- End Create Invoice Form -->
                 <!-- ============================================================== -->
@@ -205,7 +246,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
                             </div>
                         </div>
                     </div>

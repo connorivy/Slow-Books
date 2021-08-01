@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import employee, customer, vendor
-from .forms import addEmployee, addCustomer, addVendor, MyForm
+from .models import employee, customer, vendor, invoice
+from .forms import addEmployee, addCustomer, addVendor, addInvoice, MyForm
 
 # Create your views here.
 def home(request):
@@ -28,18 +28,24 @@ def employees(request):
 
 def customers(request):
     if request.method == 'POST':
-        form = addCustomer(request.POST)
-        if form.is_valid():
-            form.save()
+        customerform = addCustomer(request.POST)
+        invoiceform = addInvoice(request.POST)
+        if customerform.is_valid():
+            customerform.save()
             fname = form.cleaned_data.get('fname')
             lname = form.cleaned_data.get('lname')
             messages.success(request, f'{fname} {lname} added to customers')
+        if invoiceform.is_valid():
+            # invoiceform.save()
+            return redirect('dashboard-invoice')
             # return redirect('dashboard-customers')
     else:
-        form = addCustomer()
+        customerform = addCustomer()
+        invoiceform = addInvoice()
 
     context = {
-        'form': form,
+        'customerform': customerform,
+        'invoiceform': invoiceform,
         'customers': customer.objects.all().values()
     }
 
@@ -64,8 +70,22 @@ def vendors(request):
 
     return render(request, 'dashboard/vendors.html', context)
 
-def invoice(request):
-    return render(request, 'dashboard/invoice.html')
+def invoices(request):
+    if request.method == 'POST':
+        form = addInvoice(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard-invoice')
+    else:
+        form = addInvoice()
+
+    context = {
+        'form': form,
+        'invoices': invoice.objects.all().values()
+    }
+    print(context['invoices'])
+
+    return render(request, 'dashboard/invoice.html', context)
 
 def myview(request):
     if request.method == 'POST':
@@ -74,5 +94,5 @@ def myview(request):
             print("valid!")
     else:
         form = MyForm()
-        
+
     return render(request, "dashboard/test.html", { 'form': form })
