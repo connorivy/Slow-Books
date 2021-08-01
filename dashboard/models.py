@@ -57,7 +57,7 @@ class vendor(models.Model):
         return f'{self.fname} {self.lname}'
 
 class invoice(models.Model):
-    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.CharField(max_length=25)
     invoice_num = models.IntegerField(null=True, blank=True)
     part = models.CharField(max_length=25)
     quant = models.IntegerField()

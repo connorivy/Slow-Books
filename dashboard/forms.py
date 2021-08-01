@@ -4,7 +4,7 @@ from django.db import models
 from dashboard.models import employee, customer, vendor, invoice
 from crispy_forms.helper import FormHelper 
 
-STATES = (( '', 'Choose...'), ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming'))
+STATES = [( '', 'Choose...'), ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming')]
 
 
 class addEmployee(forms.ModelForm):
@@ -89,14 +89,42 @@ class addInvoice(forms.ModelForm):
     helper.form_show_labels = False
 
     part = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    invoice_num = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
     cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    q_customers = customer.objects.all().values()
+    print(q_customers)
+    ids = [customer3['id'] for customer3 in q_customers]
+    fname = [customer3['fname'] for customer3 in q_customers]
+    lname = [customer3['lname'] for customer3 in q_customers]
+    l_customers = [( '', 'Choose...')]
+    print(ids)
+
+    for index in range(len(q_customers)):
+        l_customers.append((ids[index],f'{fname[index]} {lname[index]}'))
+    print(l_customers)
+
+    # customers = customer.objects.filter(author=author).values_list('id', flat=True)
+
+    customer = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
+    # customer = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = invoice
-        fields = ['part', 'cost', 'quant']
+        fields = ['part', 'invoice_num', 'cost', 'customer', 'quant']
 
 class MyForm(forms.Form):
+    # part = forms.CharField(
+    #     widget=forms.TextInput(attrs={'class': 'form-control'},forms.HiddenInput()
+    # ))
+    # cost = forms.DecimalField(
+    #     widget=forms.NumberInput(attrs={'class': 'form-control'},forms.HiddenInput()
+    # ))
+    # quant = forms.IntegerField(
+    #     widget=forms.NumberInput(attrs={'class': 'form-control'},forms.HiddenInput()
+    # ))
+    
     original_field = forms.CharField()
     extra_field_count = forms.CharField(widget=forms.HiddenInput())
 
@@ -110,3 +138,7 @@ class MyForm(forms.Form):
             # generate extra fields in the number specified via extra_fields
             self.fields['extra_field_{index}'.format(index=index)] = \
                 forms.CharField()
+
+    # class Meta:
+    #     model = invoice
+    #     fields = ['part', 'cost', 'quant']

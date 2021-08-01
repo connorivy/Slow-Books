@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.urls import reverse
+from urllib.parse import urlencode
 from .models import employee, customer, vendor, invoice
 from .forms import addEmployee, addCustomer, addVendor, addInvoice, MyForm
 
@@ -36,9 +38,18 @@ def customers(request):
             lname = form.cleaned_data.get('lname')
             messages.success(request, f'{fname} {lname} added to customers')
         if invoiceform.is_valid():
-            # invoiceform.save()
+            # base_url = reverse('dashboard-invoice')  # 1 /products/
+            # query_string =  urlencode({
+            #     'part': invoiceform.cleaned_data.get('part'),
+            #     'cost': invoiceform.cleaned_data.get('cost'),
+            #     'quant': invoiceform.cleaned_data.get('quant'),
+            #     'invoice_num': invoiceform.cleaned_data.get('invoice_num'),
+            #     'customer': invoiceform.cleaned_data.get('customer'),
+            # }) 
+            # url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
+            # return redirect(url)  # 4
+            invoiceform.save()
             return redirect('dashboard-invoice')
-            # return redirect('dashboard-customers')
     else:
         customerform = addCustomer()
         invoiceform = addInvoice()
@@ -75,12 +86,15 @@ def invoices(request):
         form = addInvoice(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('dashboard-invoice')
+            return redirect('dashboard-invoice', {'form': form })
     else:
         form = addInvoice()
 
     context = {
-        'form': form,
+        'part': request.GET.get('part'),
+        'cost': request.GET.get('cost'),
+        'quant': request.GET.get('quant'),
+        'customer': request.GET.get('quant'),
         'invoices': invoice.objects.all().values()
     }
     print(context['invoices'])
