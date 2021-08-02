@@ -64,17 +64,17 @@ def customers(request):
 
 def vendors(request):
     if request.method == 'POST':
-        form = addVendor(request.POST)
-        if form.is_valid():
-            form.save()
-            bizname = form.cleaned_data.get('bizname')
+        vendorform = addVendor(request.POST)
+        if vendorform.is_valid():
+            vendorform.save()
+            bizname = vendorform.cleaned_data.get('bizname')
             messages.success(request, f'{bizname} added to vendors')
             # return redirect('dashboard-vendors')
     else:
-        form = addVendor()
+        vendorform = addVendor()
 
     context = {
-        'form': form,
+        'vendorform': vendorform,
         'vendors': vendor.objects.all().values()
     }
     print(context['vendors'])
