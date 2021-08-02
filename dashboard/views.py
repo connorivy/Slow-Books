@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from urllib.parse import urlencode
-from .models import employee, customer, vendor, invoice, po
-from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, MyForm
+from .models import employee, customer, vendor, invoice, po, inventory
+from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm
 
 # Create your views here.
 def home(request):
@@ -95,8 +95,12 @@ def fillInChoices(request):
         # get the vendor from the client side.
         ven = request.GET.get("ven", None)
         # check for the vendor in the database.
-        part = vendor.objects.get(id = ven).part
-        cost = vendor.objects.get(id = ven).cost
+        try:
+            part = vendor.objects.get(id = ven).part
+            cost = vendor.objects.get(id = ven).cost
+        except:
+            part = ''
+            cost = ''
         return JsonResponse({"part":part,"cost":cost}, status = 200)
     return JsonResponse({}, status = 400)
 
@@ -120,6 +124,25 @@ def invoices(request):
     print(context['invoices'])
 
     return render(request, 'dashboard/invoice.html', context)
+
+def inventoryView(request):
+    if request.method == 'POST':
+        prodform = addProduct(request.POST)
+        if prodform.is_valid():
+            prodform.save()
+            # fname = form.cleaned_data.get('fname')
+            # lname = form.cleaned_data.get('lname')
+            # messages.success(request, f'{fname} {lname} added to employees')
+            # return redirect('dashboard-employees')
+    else:
+        prodform = addProduct()
+
+    context = {
+        'prodform': prodform,
+        'inventory': inventory.objects.all().values()
+    }
+
+    return render(request, 'dashboard/inventory.html', context)
 
 def myview(request):
     if request.method == 'POST':

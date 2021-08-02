@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from dashboard.models import employee, customer, vendor, invoice, po
+from dashboard.models import employee, customer, vendor, invoice, po, product
 from crispy_forms.helper import FormHelper 
 
 STATES = [( '', 'Choose...'), ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming')]
@@ -131,15 +131,38 @@ class addPO(forms.ModelForm):
         l_vendors.append((ids[index],f'{name[index]}'))
     print(l_vendors)
 
-    # customers = customer.objects.filter(author=author).values_list('id', flat=True)
 
     ven = forms.ChoiceField(choices=l_vendors, widget=forms.Select(attrs={'class': 'form-control vendorchoices'}))
-    # customer = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = po
         fields = ['ven', 'part', 'cost', 'quant']
+
+class addProduct(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_show_labels = False
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    # the next 8ish lines of code are embarrasing. I need to learn queries 
+    q_vendor = vendor.objects.all().values()
+    ids = [vendor3['id'] for vendor3 in q_vendor]
+    name = [vendor3['part'] for vendor3 in q_vendor]
+    l_parts = []
+
+    for index in range(len(q_vendor)):
+        l_parts.append((ids[index],f'{name[index]}'))
+
+    part_ids = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control productpart'}),choices=l_parts)
+    print(part_ids)
+
+    part_quants = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = product
+        fields = ['name', 'part_ids', 'part_quants', 'cost']
 
 class MyForm(forms.Form):
     # part = forms.CharField(
@@ -157,6 +180,7 @@ class MyForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         extra_fields = kwargs.pop('extra', 0)
+        print('extra fields', extra_fields)
 
         super(MyForm, self).__init__(*args, **kwargs)
         self.fields['extra_field_count'].initial = extra_fields

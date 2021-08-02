@@ -81,5 +81,24 @@ class po(models.Model):
     def __str__(self):
         return f'{self.quant} {self.part}'
 
+class inventory(models.Model):
+    part = models.CharField(max_length=25)
+    cost = models.DecimalField(max_digits=10, decimal_places=4)
+    quant = models.IntegerField()
+    threshold = models.IntegerField()
+    
+
+    def __str__(self):
+        return f'{self.quant} {self.part}'
+
+class product(models.Model):
+    name = models.CharField(max_length=25)
+    part_ids = models.CharField(max_length=25)
+    part_quants = models.IntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    
+
+    def __str__(self):
+        return f'{self.name}'
 
 
