@@ -335,18 +335,35 @@
         already exists or not.
         */
         $(".vendorchoices").focusout(function (e) {
-            console.log('vendorchoices')
             e.preventDefault();
             // get the vendor name
             var ven = $(this).val();
             // GET AJAX request
             $.ajax({
                 type: 'GET',
-                url: "{% url 'fill_choices' %}",
+                url: "{% url 'fill_ven_choices' %}",
                 data: {"ven": ven},
                 success: function (response) {
                     part = $(".vendorpart").val(response["part"]);
                     cost = $(".vendorcost").val(response["cost"]);
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        })
+
+        $(".prodchoices").focusout(function (e) {
+            e.preventDefault();
+            // get the vendor name
+            var prod = $(this).val();
+            // GET AJAX request
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'fill_prod_choices' %}",
+                data: {"prod": prod},
+                success: function (response) {
+                    cost = $(".prodcost").val(response["cost"]);
                 },
                 error: function (response) {
                     console.log(response)

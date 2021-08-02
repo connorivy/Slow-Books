@@ -59,7 +59,7 @@ class vendor(models.Model):
 class invoice(models.Model):
     customer = models.CharField(max_length=25)
     invoice_num = models.IntegerField(null=True, blank=True)
-    part = models.CharField(max_length=25)
+    prod = models.CharField(max_length=25)
     quant = models.IntegerField()
     cost = models.DecimalField(max_digits=10, decimal_places=4)
 

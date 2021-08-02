@@ -24,5 +24,6 @@ urlpatterns = [
     path('home/', include('homepage.urls')),
     path('admin/', admin.site.urls),
 
-    path('get/ajax/validate/choices', dash_views.fillInChoices, name = "fill_choices")
+    path('get/ajax/validate/venchoices', dash_views.fillInVendorChoices, name = "fill_ven_choices"),
+    path('get/ajax/validate/prodchoices', dash_views.fillInProdChoices, name = "fill_prod_choices")
 ]

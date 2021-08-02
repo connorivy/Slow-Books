@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from urllib.parse import urlencode
-from .models import employee, customer, vendor, invoice, po, inventory
+from .models import employee, customer, product, vendor, invoice, po, inventory
 from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm
 
 # Create your views here.
@@ -90,7 +90,7 @@ def vendors(request):
 
     return render(request, 'dashboard/vendors.html', context)
 
-def fillInChoices(request):
+def fillInVendorChoices(request):
     if request.is_ajax and request.method == "GET":
         # get the vendor from the client side.
         ven = request.GET.get("ven", None)
@@ -143,6 +143,20 @@ def inventoryView(request):
     }
 
     return render(request, 'dashboard/inventory.html', context)
+
+def fillInProdChoices(request):
+    if request.is_ajax and request.method == "GET":
+        # get the vendor from the client side.
+        prod = request.GET.get("prod", None)
+        print(f'\n\n\n {prod} \n\n\n')
+        # check for the vendor in the database.
+        try:
+            cost = product.objects.get(id = prod).cost
+            print(f'\n\n\n {cost} \n\n\n')
+        except:
+            cost = ''
+        return JsonResponse({"cost":cost}, status = 200)
+    return JsonResponse({}, status = 400)
 
 def myview(request):
     if request.method == 'POST':
