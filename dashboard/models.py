@@ -69,5 +69,17 @@ class invoice(models.Model):
     def __str__(self):
         return f'{self.invoice_num}'
 
+class po(models.Model):
+    ven = models.CharField(max_length=25)
+    part = models.CharField(max_length=25)
+    quant = models.IntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=4)
+
+    date_added = models.DateTimeField(default=timezone.now)
+    paid = models.BooleanField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.quant} {self.part}'
+
 
 

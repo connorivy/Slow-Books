@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
+from dashboard import views as dash_views
 
 urlpatterns = [
     path('', include('dashboard.urls')),
     path('register/', user_views.register, name='register'),
     path('home/', include('homepage.urls')),
     path('admin/', admin.site.urls),
+
+    path('get/ajax/validate/choices', dash_views.fillInChoices, name = "fill_choices")
 ]

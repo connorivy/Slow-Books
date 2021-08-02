@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from dashboard.models import employee, customer, vendor, invoice
+from dashboard.models import employee, customer, vendor, invoice, po
 from crispy_forms.helper import FormHelper 
 
 STATES = [( '', 'Choose...'), ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming')]
@@ -92,17 +92,15 @@ class addInvoice(forms.ModelForm):
     invoice_num = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
     cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
+    # the next 10 lines of code are embarrasing. I need to learn queries 
     q_customers = customer.objects.all().values()
-    print(q_customers)
     ids = [customer3['id'] for customer3 in q_customers]
     fname = [customer3['fname'] for customer3 in q_customers]
     lname = [customer3['lname'] for customer3 in q_customers]
     l_customers = [( '', 'Choose...')]
-    print(ids)
 
     for index in range(len(q_customers)):
         l_customers.append((ids[index],f'{fname[index]} {lname[index]}'))
-    print(l_customers)
 
     # customers = customer.objects.filter(author=author).values_list('id', flat=True)
 
@@ -113,6 +111,35 @@ class addInvoice(forms.ModelForm):
     class Meta:
         model = invoice
         fields = ['part', 'invoice_num', 'cost', 'customer', 'quant']
+
+class addPO(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_show_labels = False
+
+    part = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control vendorpart', 'readonly':''}))
+    cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control vendorcost', 'readonly':''}))
+
+    # the next 10 lines of code are embarrasing. I need to learn queries 
+    q_vendor = vendor.objects.all().values()
+    print(q_vendor)
+    ids = [vendor3['id'] for vendor3 in q_vendor]
+    name = [vendor3['bizname'] for vendor3 in q_vendor]
+    l_vendors = [( '', 'Choose...')]
+    print(ids)
+
+    for index in range(len(q_vendor)):
+        l_vendors.append((ids[index],f'{name[index]}'))
+    print(l_vendors)
+
+    # customers = customer.objects.filter(author=author).values_list('id', flat=True)
+
+    ven = forms.ChoiceField(choices=l_vendors, widget=forms.Select(attrs={'class': 'form-control vendorchoices'}))
+    # customer = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = po
+        fields = ['ven', 'part', 'cost', 'quant']
 
 class MyForm(forms.Form):
     # part = forms.CharField(

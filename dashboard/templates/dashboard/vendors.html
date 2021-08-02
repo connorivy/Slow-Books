@@ -46,6 +46,15 @@
                         <div class="card card-hover">
                             <div class="box bg-success text-center" onclick="showForm('form2')">
                                 <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
+                                <h6 class="text-white">Create Purchase Order</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <div class="col-md-6 col-lg-3 col-xlg-3">
+                        <div class="card card-hover">
+                            <div class="box bg-success text-center" onclick="showForm('form3')">
+                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
                                 <h6 class="text-white">Remove</h6>
                             </div>
                         </div>
@@ -148,6 +157,63 @@
                         </div>
                     </form>
                 </div>
+
+                <div class="card" id="form2" style="display: none;">
+                    <form class="form-horizontal" method="POST">
+                        <div class="card-body">
+                            <h4 class="card-title">Create Invoice</h4>{% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Vendor</label>
+                                        <div class="col-sm-9">
+                                            {{ poform.ven|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ============================================================== -->
+                                <!-- End left col  -->
+                                <!-- ============================================================== -->
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Part</label>
+                                        <div class="col-sm-9">
+                                            {{ poform.part|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ============================================================== -->
+                                <!-- End middle col  -->
+                                <!-- ============================================================== -->
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Cost</label>
+                                        <div class="col-sm-9">
+                                            {{ poform.cost|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Quantity</label>
+                                        <div class="col-sm-9">
+                                            {{ poform.quant|as_crispy_field }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ============================================================== -->
+                                <!-- End right col  -->
+                                <!-- ============================================================== -->
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <button type="submit" class="btn btn-primary" value='POST'>Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Create Invoice Form -->
+                <!-- ============================================================== -->
 
                 
                 <div class="row">

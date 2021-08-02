@@ -1,9 +1,10 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from urllib.parse import urlencode
-from .models import employee, customer, vendor, invoice
-from .forms import addEmployee, addCustomer, addVendor, addInvoice, MyForm
+from .models import employee, customer, vendor, invoice, po
+from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, MyForm
 
 # Create your views here.
 def home(request):
@@ -64,22 +65,41 @@ def customers(request):
 
 def vendors(request):
     if request.method == 'POST':
+        poform = addPO(request.POST)
         vendorform = addVendor(request.POST)
         if vendorform.is_valid():
             vendorform.save()
             bizname = vendorform.cleaned_data.get('bizname')
             messages.success(request, f'{bizname} added to vendors')
             # return redirect('dashboard-vendors')
+        if poform.is_valid():
+            poform.save()
     else:
         vendorform = addVendor()
+        poform = addPO()
+
+    if request.is_ajax and request.method == 'GET':
+        part = request.GET.get('part', None)
 
     context = {
         'vendorform': vendorform,
+        'poform': poform,
         'vendors': vendor.objects.all().values()
     }
     print(context['vendors'])
 
     return render(request, 'dashboard/vendors.html', context)
+
+def fillInChoices(request):
+    if request.is_ajax and request.method == "GET":
+        # get the vendor from the client side.
+        ven = request.GET.get("ven", None)
+        # check for the vendor in the database.
+        part = vendor.objects.get(id = ven).part
+        cost = vendor.objects.get(id = ven).cost
+        return JsonResponse({"part":part,"cost":cost}, status = 200)
+    return JsonResponse({}, status = 400)
+
 
 def invoices(request):
     if request.method == 'POST':
