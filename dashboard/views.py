@@ -5,6 +5,7 @@ from django.urls import reverse
 from urllib.parse import urlencode
 from .models import employee, customer, product, vendor, invoice, po, inventory
 from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm
+from utils.update_inventory import *
 
 # Create your views here.
 def home(request):
@@ -73,7 +74,11 @@ def vendors(request):
             messages.success(request, f'{bizname} added to vendors')
             # return redirect('dashboard-vendors')
         if poform.is_valid():
+            part = poform.cleaned_data.get('part')
+            cost = poform.cleaned_data.get('cost')
+            quant = poform.cleaned_data.get('quant')
             poform.save()
+            update_inventory(inventory, part, cost, quant)
     else:
         vendorform = addVendor()
         poform = addPO()

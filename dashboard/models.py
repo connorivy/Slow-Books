@@ -83,9 +83,9 @@ class po(models.Model):
 
 class inventory(models.Model):
     part = models.CharField(max_length=25)
-    cost = models.DecimalField(max_digits=10, decimal_places=4)
     quant = models.IntegerField()
-    threshold = models.IntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=4)
+    threshold = models.IntegerField(null=True, blank=True)
     
 
     def __str__(self):
