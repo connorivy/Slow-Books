@@ -84,7 +84,7 @@ class addVendor(forms.ModelForm):
         model = vendor
         fields = ['bizname', 'part', 'cost', 'fname', 'lname', 'email', 'phone', 'add1', 'add2', 'city', 'state', 'zipcode']
 
-class addInvoice(forms.ModelForm):
+class addInvoice(forms.Form):
     # def __init__(self, *args, **kwargs):
     #     super(addInvoice, self).__init__(*args, **kwargs)
     helper = FormHelper()
@@ -92,39 +92,46 @@ class addInvoice(forms.ModelForm):
 
     # the next 8ish lines of code are embarrasing. I need to learn queries 
     q_prods = product.objects.all().values()
-    print('q_prods', q_prods)
-    ids = [prod3['id'] for prod3 in q_prods]
+    prod_ids = [prod3['id'] for prod3 in q_prods]
     name = [prod3['name'] for prod3 in q_prods]
     l_prods = [( '', 'Choose...')]
 
     for index in range(len(q_prods)):
-        l_prods.append((ids[index],f'{name[index]}'))
-    print('l_prods', l_prods)
+        l_prods.append((prod_ids[index],f'{name[index]}'))
 
-    prod = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control prodchoices'}),choices=l_prods)
+    prod_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control prodchoices'}),choices=l_prods)
 
-    invoice_num = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control prodcost', 'readonly':''}))
+    price = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control prodprice', 'readonly':''}))
 
     # the next 10 lines of code are embarrasing. I need to learn queries 
     q_customers = customer.objects.all().values()
-    ids = [customer3['id'] for customer3 in q_customers]
+    cust_ids = [customer3['id'] for customer3 in q_customers]
     fname = [customer3['fname'] for customer3 in q_customers]
     lname = [customer3['lname'] for customer3 in q_customers]
     l_customers = [( '', 'Choose...')]
 
     for index in range(len(q_customers)):
-        l_customers.append((ids[index],f'{fname[index]} {lname[index]}'))
+        l_customers.append((cust_ids[index],f'{fname[index]} {lname[index]}'))
 
     # customers = customer.objects.filter(author=author).values_list('id', flat=True)
 
-    cust = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
-    # customer = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    cust_id = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
-    class Meta:
-        model = invoice
-        fields = ['prod', 'invoice_num', 'cost', 'cust', 'quant']
+    def save(self):
+        data = self.cleaned_data
+        cust_id = data['cust_id']
+        prod_id = data['prod_id']
+
+        cust = customer.objects.get(pk = cust_id)
+        prod = product.objects.get(pk = prod_id)
+        price = data['price'] * data['quant']
+
+        inv = invoice(cust=cust, prod=prod,
+            quant=data['quant'], price=price)
+
+        inv.save()
+
 
 class addPO(forms.ModelForm):
     helper = FormHelper()
@@ -167,11 +174,11 @@ class addProduct(forms.ModelForm):
     part_ids = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}),choices=l_parts)
 
     part_quants = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    price = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = product
-        fields = ['name', 'part_ids', 'part_quants', 'cost']
+        fields = ['name', 'part_ids', 'part_quants', 'price']
 
 class MyForm(forms.Form):
     # part = forms.CharField(

@@ -1,5 +1,5 @@
 from django.contrib import messages
-from dashboard.models import product, vendor
+from dashboard.models import product, vendor, invoice, inventory
 
 def add_inventory(inventory, part, cost, quant):
     try:
@@ -16,10 +16,11 @@ def add_inventory(inventory, part, cost, quant):
         part_in_inventory.quant = quant
         part_in_inventory.save()
 
-def sub_inventory(inventory, prod, cost, quant, request):
-    prod_sold = product.objects.get(id=prod)
-    vendor_ids = prod_sold.part_ids
-    quants_in_inventory = prod_sold.part_quants.split('/')
+def sub_inventory(request):
+    inv = invoice.objects.latest('date_added')
+    prod = inv.prod
+    vendor_ids = prod.part_ids
+    quants_in_inventory = prod.part_quants.split('/')
     print('qininve', quants_in_inventory)
 
     disallowed_characters = "[]'"
@@ -34,6 +35,6 @@ def sub_inventory(inventory, prod, cost, quant, request):
         vendor_entry = vendor.objects.get(id=vendor_ids[index])
         part_in_inventory = inventory.objects.get(part=vendor_entry.part)
 
-        part_in_inventory.value -= cost * quant * int(quants_in_inventory[index])
-        part_in_inventory.quant -= quant * int(quants_in_inventory[index])
+        part_in_inventory.value -= vendor_entry.cost * inv.quant * int(quants_in_inventory[index])
+        part_in_inventory.quant -= inv.quant * int(quants_in_inventory[index])
         part_in_inventory.save()

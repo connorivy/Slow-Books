@@ -15,8 +15,6 @@ def employees(request):
     if request.method == 'POST':
         form = addEmployee(request.POST)
         if form.is_valid():
-            state = form.cleaned_data.get('state')
-            print("state", state)
             form.save()
             fname = form.cleaned_data.get('fname')
             lname = form.cleaned_data.get('lname')
@@ -52,12 +50,20 @@ def customers(request):
             # }) 
             # url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
             # return redirect(url)  # 4
+
+            # instance = invoiceform.save(commit=False)
+            # cust_id = invoiceform.cleaned_data.get('cust_id')
+
+            # instance.cust = customer.objects.get(pk = cust_id)
+            # print(f'\n\n\n {instance.cust} \n\n\n')
+            # instance.save()
+            invoiceform.save()
+            
             prod = invoiceform.cleaned_data.get('prod')
-            print('prod', prod)
             cost = invoiceform.cleaned_data.get('cost')
             quant = invoiceform.cleaned_data.get('quant')
-            invoiceform.save()
-            sub_inventory(inventory, prod, cost, quant, request)
+
+            sub_inventory(request)
             return redirect('dashboard-invoice')
     else:
         customerform = addCustomer()
@@ -98,7 +104,6 @@ def vendors(request):
         'poform': poform,
         'vendors': vendor.objects.all().values()
     }
-    print(context['vendors'])
 
     return render(request, 'dashboard/vendors.html', context)
 
@@ -133,7 +138,6 @@ def invoices(request):
         'customer': request.GET.get('quant'),
         'invoices': invoice.objects.all().values()
     }
-    print(context['invoices'])
 
     return render(request, 'dashboard/invoice.html', context)
 
@@ -160,13 +164,12 @@ def fillInProdChoices(request):
     if request.is_ajax and request.method == "GET":
         # get the vendor from the client side.
         prod = request.GET.get("prod", None)
-        print(f'\n\n\n {prod} \n\n\n')
         # check for the vendor in the database.
         try:
-            cost = product.objects.get(id = prod).cost
+            price = product.objects.get(id = prod).price
         except:
-            cost = ''
-        return JsonResponse({"cost":cost}, status = 200)
+            price = ''
+        return JsonResponse({"price":price}, status = 200)
     return JsonResponse({}, status = 400)
 
 def myview(request):
@@ -178,3 +181,12 @@ def myview(request):
         form = MyForm()
 
     return render(request, "dashboard/test.html", { 'form': form })
+
+def transactions(request):
+    context = {
+        'invoices': invoice.objects.all().values(),
+        'pos': po.objects.all().values()
+    }
+    print(context['invoices'])
+
+    return render(request, "dashboard/transactions.html", context)

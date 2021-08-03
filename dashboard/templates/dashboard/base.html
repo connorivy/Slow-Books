@@ -202,6 +202,7 @@
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard-customers' %}" aria-expanded="false"><i class="mdi mdi-face"></i><span class="hide-menu">Customers</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard-vendors' %}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Vendors</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard-inventory' %}" aria-expanded="false"><i class="mdi mdi-blur-linear"></i><span class="hide-menu">Inventory</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'dashboard-transactions' %}" aria-expanded="false"><i class="mdi mdi-currency-usd"></i><span class="hide-menu">Transaction History</span></a></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-receipt"></i><span class="hide-menu">Forms </span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 <li class="sidebar-item"><a href="form-basic.html" class="sidebar-link"><i class="mdi mdi-note-outline"></i><span class="hide-menu"> Form Basic </span></a></li>
@@ -357,13 +358,14 @@
             e.preventDefault();
             // get the vendor name
             var prod = $(this).val();
+            console.log(prod)
             // GET AJAX request
             $.ajax({
                 type: 'GET',
                 url: "{% url 'fill_prod_choices' %}",
                 data: {"prod": prod},
                 success: function (response) {
-                    cost = $(".prodcost").val(response["cost"]);
+                    price = $(".prodprice").val(response["price"]);
                 },
                 error: function (response) {
                     console.log(response)
