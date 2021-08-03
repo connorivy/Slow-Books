@@ -36,8 +36,8 @@ def customers(request):
         invoiceform = addInvoice(request.POST)
         if customerform.is_valid():
             customerform.save()
-            fname = form.cleaned_data.get('fname')
-            lname = form.cleaned_data.get('lname')
+            fname = customerform.cleaned_data.get('fname')
+            lname = customerform.cleaned_data.get('lname')
             messages.success(request, f'{fname} {lname} added to customers')
         if invoiceform.is_valid():
             # base_url = reverse('dashboard-invoice')  # 1 /products/
@@ -50,7 +50,11 @@ def customers(request):
             # }) 
             # url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
             # return redirect(url)  # 4
+            part = invoiceform.cleaned_data.get('part'),
+            cost = invoiceform.cleaned_data.get('cost'),
+            quant = invoiceform.cleaned_data.get('quant'),
             invoiceform.save()
+            sub_inventory(inventory, part, cost, quant, request)
             return redirect('dashboard-invoice')
     else:
         customerform = addCustomer()
@@ -78,7 +82,7 @@ def vendors(request):
             cost = poform.cleaned_data.get('cost')
             quant = poform.cleaned_data.get('quant')
             poform.save()
-            update_inventory(inventory, part, cost, quant)
+            add_inventory(inventory, part, cost, quant)
     else:
         vendorform = addVendor()
         poform = addPO()
