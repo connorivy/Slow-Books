@@ -92,13 +92,8 @@
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </th>
-                                                {% for key,value in invoice.items %}
-                                                    {% if key != 'paid' %}
-                                                        <td>{{ key }}</td>
-                                                    {% endif %}
-                                                    {% if key == 'cust' %}
-                                                        <td>{{ value.fname }} {{ value.lname }}</td>
-                                                    {% endif %}
+                                                {% for value in invoice %}
+                                                    <td>{{ value }}</td>
                                                 {% endfor %}
                                             </tr>
                                             {% endfor %}

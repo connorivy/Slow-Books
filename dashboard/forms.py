@@ -120,11 +120,9 @@ class addInvoice(forms.Form):
 
     def save(self):
         data = self.cleaned_data
-        cust_id = data['cust_id']
-        prod_id = data['prod_id']
 
-        cust = customer.objects.get(pk = cust_id)
-        prod = product.objects.get(pk = prod_id)
+        cust = customer.objects.get(pk = data['cust_id'])
+        prod = product.objects.get(pk = data['prod_id'])
         price = data['price'] * data['quant']
 
         inv = invoice(cust=cust, prod=prod,

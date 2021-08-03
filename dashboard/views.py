@@ -1,11 +1,13 @@
 from django.http.response import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core import serializers
 from django.urls import reverse
 from urllib.parse import urlencode
 from .models import employee, customer, product, vendor, invoice, po, inventory
 from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm
 from utils.update_inventory import *
+from utils.model_to_dict import *
 
 # Create your views here.
 def home(request):
@@ -183,8 +185,10 @@ def myview(request):
     return render(request, "dashboard/test.html", { 'form': form })
 
 def transactions(request):
+    inv_objs = invoice.objects.all()
+
     context = {
-        'invoices': invoice.objects.all().values(),
+        'invoices': query_to_list(invoice.objects.all(),['paid']),
         'pos': po.objects.all().values()
     }
     print(context['invoices'])
