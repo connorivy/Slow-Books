@@ -85,17 +85,21 @@ class addVendor(forms.ModelForm):
         fields = ['bizname', 'part', 'cost', 'fname', 'lname', 'email', 'phone', 'add1', 'add2', 'city', 'state', 'zipcode']
 
 class addInvoice(forms.ModelForm):
+    # def __init__(self, *args, **kwargs):
+    #     super(addInvoice, self).__init__(*args, **kwargs)
     helper = FormHelper()
     helper.form_show_labels = False
 
     # the next 8ish lines of code are embarrasing. I need to learn queries 
     q_prods = product.objects.all().values()
+    print('q_prods', q_prods)
     ids = [prod3['id'] for prod3 in q_prods]
     name = [prod3['name'] for prod3 in q_prods]
     l_prods = [( '', 'Choose...')]
 
     for index in range(len(q_prods)):
         l_prods.append((ids[index],f'{name[index]}'))
+    print('l_prods', l_prods)
 
     prod = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control prodchoices'}),choices=l_prods)
 
@@ -114,13 +118,13 @@ class addInvoice(forms.ModelForm):
 
     # customers = customer.objects.filter(author=author).values_list('id', flat=True)
 
-    customer = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
+    cust = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
     # customer = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = invoice
-        fields = ['prod', 'invoice_num', 'cost', 'customer', 'quant']
+        fields = ['prod', 'invoice_num', 'cost', 'cust', 'quant']
 
 class addPO(forms.ModelForm):
     helper = FormHelper()
@@ -131,16 +135,12 @@ class addPO(forms.ModelForm):
 
     # the next 10 lines of code are embarrasing. I need to learn queries 
     q_vendor = vendor.objects.all().values()
-    print(q_vendor)
     ids = [vendor3['id'] for vendor3 in q_vendor]
     name = [vendor3['bizname'] for vendor3 in q_vendor]
     l_vendors = [( '', 'Choose...')]
-    print(ids)
 
     for index in range(len(q_vendor)):
         l_vendors.append((ids[index],f'{name[index]}'))
-    print(l_vendors)
-
 
     ven = forms.ChoiceField(choices=l_vendors, widget=forms.Select(attrs={'class': 'form-control vendorchoices'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -189,7 +189,6 @@ class MyForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         extra_fields = kwargs.pop('extra', 0)
-        print('extra fields', extra_fields)
 
         super(MyForm, self).__init__(*args, **kwargs)
         self.fields['extra_field_count'].initial = extra_fields

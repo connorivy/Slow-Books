@@ -15,6 +15,8 @@ def employees(request):
     if request.method == 'POST':
         form = addEmployee(request.POST)
         if form.is_valid():
+            state = form.cleaned_data.get('state')
+            print("state", state)
             form.save()
             fname = form.cleaned_data.get('fname')
             lname = form.cleaned_data.get('lname')
@@ -50,11 +52,12 @@ def customers(request):
             # }) 
             # url = '{}?{}'.format(base_url, query_string)  # 3 /products/?category=42
             # return redirect(url)  # 4
-            part = invoiceform.cleaned_data.get('part'),
-            cost = invoiceform.cleaned_data.get('cost'),
-            quant = invoiceform.cleaned_data.get('quant'),
+            prod = invoiceform.cleaned_data.get('prod')
+            print('prod', prod)
+            cost = invoiceform.cleaned_data.get('cost')
+            quant = invoiceform.cleaned_data.get('quant')
             invoiceform.save()
-            sub_inventory(inventory, part, cost, quant, request)
+            sub_inventory(inventory, prod, cost, quant, request)
             return redirect('dashboard-invoice')
     else:
         customerform = addCustomer()
@@ -161,7 +164,6 @@ def fillInProdChoices(request):
         # check for the vendor in the database.
         try:
             cost = product.objects.get(id = prod).cost
-            print(f'\n\n\n {cost} \n\n\n')
         except:
             cost = ''
         return JsonResponse({"cost":cost}, status = 200)

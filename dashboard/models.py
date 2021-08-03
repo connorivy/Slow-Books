@@ -57,7 +57,7 @@ class vendor(models.Model):
         return f'{self.fname} {self.lname}'
 
 class invoice(models.Model):
-    customer = models.CharField(max_length=25)
+    cust = models.CharField(max_length=25)
     invoice_num = models.IntegerField(null=True, blank=True)
     prod = models.CharField(max_length=25)
     quant = models.IntegerField()
@@ -84,7 +84,8 @@ class po(models.Model):
 class inventory(models.Model):
     part = models.CharField(max_length=25)
     quant = models.IntegerField()
-    cost = models.DecimalField(max_digits=10, decimal_places=4)
+    costper = models.DecimalField(max_digits=10, decimal_places=4)
+    value = models.DecimalField(max_digits=10, decimal_places=2)
     threshold = models.IntegerField(null=True, blank=True)
     
 
@@ -94,7 +95,7 @@ class inventory(models.Model):
 class product(models.Model):
     name = models.CharField(max_length=25)
     part_ids = models.CharField(max_length=25)
-    part_quants = models.IntegerField()
+    part_quants = models.CharField(max_length=25)
     cost = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
     
 
