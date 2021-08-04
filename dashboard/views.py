@@ -11,13 +11,8 @@ from utils.model_to_dict import *
 
 # Create your views here.
 def home(request):
-    cash, inv = get_cash(200000, invoice.objects.all(), po.objects.all(), payroll.objects.all(), inventory.objects.all())
+    context = get_cash(200000, invoice.objects.all(), po.objects.all(), payroll.objects.all(), inventory.objects.all())
     
-    context = {
-        'cash': cash,
-        'inventory': inv,
-        'current_assets': cash+inv,
-    }
     return render(request,'dashboard/home.html', context)
 
 def employees(request):

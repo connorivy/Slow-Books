@@ -361,114 +361,120 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Basic Datatable</h5>
-                                <div class="table-responsive">
-                                    <table id="zero_config" class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox m-b-20">
-                                                    <input type="checkbox" id="mainCheckbox" />
-                                                    <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>Edinburgh</td>
-                                                <td>61</td>
-                                                <td>2011/04/25</td>
-                                                <td>$320,800</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Garrett Winters</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>63</td>
-                                                <td>2011/07/25</td>
-                                                <td>$170,750</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Ashton Cox</td>
-                                                <td>Junior Technical Author</td>
-                                                <td>San Francisco</td>
-                                                <td>66</td>
-                                                <td>2009/01/12</td>
-                                                <td>$86,000</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Cedric Kelly</td>
-                                                <td>Senior Javascript Developer</td>
-                                                <td>Edinburgh</td>
-                                                <td>22</td>
-                                                <td>2012/03/29</td>
-                                                <td>$433,060</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Airi Satou</td>
-                                                <td>Accountant</td>
-                                                <td>Tokyo</td>
-                                                <td>33</td>
-                                                <td>2008/11/28</td>
-                                                <td>$162,700</td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <label class="customcheckbox">
-                                                        <input type="checkbox" class="listCheckbox" />
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </th>
-                                                <td>Brielle Williamson</td>
-                                                <td>Integration Specialist</td>
-                                                <td>New York</td>
-                                                <td>61</td>
-                                                <td>2012/12/02</td>
-                                                <td>$372,000</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <h5 class="card-title">Income Statement</h5>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 border-right border-left border-top border-bottom">
+                                        <div class="card">
+                                            <div class="row">
+                                                <a class="card-header link col-md-6" data-toggle="collapse" data-parent="#accordian-4"
+                                                    href="#Toggle-5" aria-expanded="true" aria-controls="Toggle-1">
+                                                    <!-- <i class="fa fa-arrow-right" aria-hidden="true"></i> -->
+                                                    <span>Gross Profit</span>
+                                                </a>
+                                                <div class="card-header col-md-6 text-right">
+                                                    ${{ gp }}
+                                                </div>
+                                            </div>
+                                            <div id="Toggle-5" class="collapse show multi-collapse">
+                                                <div class="card-body row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Sales:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ sales }}
+                                                    </div>
+                                                </div>
+                                                <div class="card-body widget-content row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Cogs:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ cogs }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <a class="card-header link col-md-6" data-toggle="collapse" data-parent="#accordian-4"
+                                                    href="#Toggle-6" aria-expanded="true" aria-controls="Toggle-1">
+                                                    <!-- <i class="fa fa-arrow-right" aria-hidden="true"></i> -->
+                                                    <span>Expenses</span>
+                                                </a>
+                                                <div class="card-header col-md-6 text-right">
+                                                    ${{ expenses }}
+                                                </div>
+                                            </div>
+                                            <div id="Toggle-6" class="collapse show multi-collapse">
+                                                <div class="card-body row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Payroll:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ payroll }}
+                                                    </div>
+                                                </div>
+                                                <div class="card-body widget-content row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Payroll Withholding:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ withholding }}
+                                                    </div>
+                                                </div>
+                                                <div class="card-body widget-content row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Bills:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ bills }}
+                                                    </div>
+                                                </div>
+                                                <div class="card-body widget-content row">
+                                                    <div class="col-md-2 text-left"></div>
+                                                    <div class="col-md-5 text-left">
+                                                        Annual Expenses:
+                                                    </div>
+                                                    <div class="col-md-5 text-right">
+                                                        ${{ ann_exp }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="card-header col-md-10 font-bold text-right">
+                                                            Taxes:    
+                                                        </div>
+                                                        <div class="card-header col-md-2 font-bold text-right">
+                                                            $0.00  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="card-footer col-md-10 font-bold text-right">
+                                                            Net Income:    
+                                                        </div>
+                                                        <div class="card-footer col-md-2 font-bold text-right">
+                                                            ${{ net_income }}  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
                                 </div>
-
+                                <div class="row">
+                                    <div class="card-body"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

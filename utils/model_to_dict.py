@@ -59,22 +59,51 @@ def get_withheld_amount(salary):
 
 def get_cash(initial, invoices, pos, payroll, inventory):
     cash = initial 
+    sales = 0
+    cogs = 0
     inv = 0
+    pay = 0
+    tax = 0
+    bills = 1250.00
+    ann_exp = 13750.00
 
     for invoice in invoices:
-        cash += invoice.price
+        sales += invoice.price
+    cash += sales
+
     for po in pos:
         cash -= po.cost
 
     for item in inventory:
         inv += item.value
+        cogs += item.costper * item.quant
 
     for item in payroll:
-        cash -= item.sal_after_tax
-        cash -= item.fed
-        cash -= item.ss
-        cash -= item.med
-        cash -= item.amount_to_match
+        pay += item.sal_after_tax
+        tax += item.fed
+        tax += item.ss
+        tax += item.med
+        tax += item.amount_to_match
+    cash -= pay
+    cash -= tax
+
+    gp = round(sales - cogs,2)
+    expenses = round(float(pay)+float(tax)+float(bills)+float(ann_exp),2)
+
+    context = {
+        'cash': round(cash,2),
+        'inventory': round(inv,2),
+        'current_assets': round(cash+inv,2),
+        'sales': round(sales, 2),
+        'cogs': round(cogs, 2),
+        'gp': gp,
+        'payroll': round(pay,2),
+        'withholding': round(tax,2),
+        'bills': bills,
+        'ann_exp': ann_exp,
+        'expenses': expenses,
+        'net_income': float(gp) - float(expenses),
+    }
 
 
-    return round(cash,2), round(inv,2)
+    return context
