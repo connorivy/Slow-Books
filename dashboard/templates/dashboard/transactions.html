@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-6 col-lg-3 col-xlg-3">
                         <div class="card card-hover">
-                            <div class="box bg-success text-center" onclick="showForm('form2')">
+                            <div class="box bg-warning text-center" onclick="showForm('form3')">
                                 <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
                                 <h6 class="text-white">Payroll</h6>
                             </div>
@@ -104,53 +104,93 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row" id="form2" style="display: none;">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Purchase Orders</h5>
-                            <div class="table-responsive">
-                                <table id="zero_config" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                <label class="customcheckbox m-b-20">
-                                                <input type="checkbox" id="mainCheckbox" />
-                                                <span class="checkmark"></span>
-                                                </label>
-                                            </th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Email Address</th>
-                                            <th>Phone Number</th>
-                                            <th>Address 1</th>
-                                            <th>Address 2</th>
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Zip Code</th>
-                                            <th>Date Added</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for po in pos %}
-                                        <tr>
-                                            <th>
-                                                <label class="customcheckbox">
-                                                    <input type="checkbox" class="listCheckbox" value="{{ customer.id }}"/>
+                <div class="row" id="form2" style="display: none;">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Purchase Orders</h5>
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox m-b-20">
+                                                    <input type="checkbox" id="mainCheckbox" />
                                                     <span class="checkmark"></span>
-                                                </label>
-                                            </th>
-                                            {% for key,value in po.items %}
-                                                {% if key != 'id' %}
+                                                    </label>
+                                                </th>
+                                                <th>Invoice Number</th>
+                                                <th>Customer</th>
+                                                <th>Product</th>
+                                                <th>Quantity</th>
+                                                <th>Amount Paid</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for po in pos %}
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox">
+                                                        <input type="checkbox" class="listCheckbox" value="{{ customer.id }}"/>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                {% for value in po %}
                                                     <td>{{ value }}</td>
-                                                {% endif %}
+                                                {% endfor %}
+                                            </tr>
                                             {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="form3" style="display: none;">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Payroll Events</h5>
+                                <div class="table-responsive">
+                                    <table id="zero_config" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox m-b-20">
+                                                    <input type="checkbox" id="mainCheckbox" />
+                                                    <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <th>Date</th>
+                                                <th>Employee</th>
+                                                <th>Federal Tax Withheld</th>
+                                                <th>Social Security Tax Withheld</th>
+                                                <th>Medicare Tax Withheld</th>
+                                                <th>After Tax Salary</th>
+                                                <th>Amount for Employer to Match</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for pay in pays %}
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox">
+                                                        <input type="checkbox" class="listCheckbox"/>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                {% for value in pay %}
+                                                    <td>{{ value }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

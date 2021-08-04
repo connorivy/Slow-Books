@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.core import serializers
 from django.urls import reverse
 from urllib.parse import urlencode
-from .models import employee, customer, product, vendor, invoice, po, inventory
-from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm
+from .models import employee, customer, payroll, product, vendor, invoice, po, inventory
+from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm, pay
 from utils.update_inventory import *
 from utils.model_to_dict import *
 
@@ -15,18 +15,23 @@ def home(request):
 
 def employees(request):
     if request.method == 'POST':
-        form = addEmployee(request.POST)
-        if form.is_valid():
-            form.save()
-            fname = form.cleaned_data.get('fname')
-            lname = form.cleaned_data.get('lname')
+        addform = addEmployee(request.POST)
+        payform = pay(request.POST)
+        if addform.is_valid():
+            addform.save()
+            fname = addform.cleaned_data.get('fname')
+            lname = addform.cleaned_data.get('lname')
             messages.success(request, f'{fname} {lname} added to employees')
             # return redirect('dashboard-employees')
+        if payform.is_valid():
+            payform.save()
     else:
-        form = addEmployee()
+        addform = addEmployee()
+        payform = pay()
 
     context = {
-        'form': form,
+        'form': addform,
+        'payform':payform,
         'employees': employee.objects.all().values()
     }
 
@@ -84,7 +89,7 @@ def vendors(request):
             bizname = vendorform.cleaned_data.get('bizname')
             messages.success(request, f'{bizname} added to vendors')
             # return redirect('dashboard-vendors')
-            
+
         if poform.is_valid():
             part = poform.cleaned_data.get('part')
             cost = poform.cleaned_data.get('cost')
@@ -183,12 +188,12 @@ def myview(request):
     return render(request, "dashboard/test.html", { 'form': form })
 
 def transactions(request):
-    inv_objs = invoice.objects.all()
 
     context = {
         'invoices': query_to_list(invoice.objects.all(),['paid']),
-        'pos': po.objects.all().values()
+        'pos': query_to_list(po.objects.all(),['paid']),
+        'pays': query_to_list(payroll.objects.all(),['id'])
     }
-    print(context['invoices'])
+    print('payrolls', context['pays'])
 
     return render(request, "dashboard/transactions.html", context)

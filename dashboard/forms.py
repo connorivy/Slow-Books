@@ -1,8 +1,8 @@
-from utils.model_to_dict import get_choices_list
+from utils.model_to_dict import get_choices_list, get_withheld_amount
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
-from dashboard.models import employee, customer, vendor, invoice, po, product
+from dashboard.models import *
 from crispy_forms.helper import FormHelper 
 
 STATES = [( '', 'Choose...'), ('AL', 'Alabama'),('AK', 'Alaska'),('AZ', 'Arizona'),('AR', 'Arkansas'),('CA', 'California'),('CO', 'Colorado'),('CT', 'Connecticut'),('DE', 'Delaware'),('FL', 'Florida'),('GA', 'Georgia'),('HI', 'Hawaii'),('ID', 'Idaho'),('IL', 'Illinois'),('IN', 'Indiana'),('IA', 'Iowa'),('KS', 'Kansas'),('KY', 'Kentucky'),('LA', 'Louisiana'),('ME', 'Maine'),('MD', 'Maryland'),('MA', 'Massachusetts'),('MI', 'Michigan'),('MN', 'Minnesota'),('MS', 'Mississippi'),('MO', 'Missouri'),('MT', 'Montana'),('NE', 'Nebraska'),('NV', 'Nevada'),('NH', 'New Hampshire'),('NJ', 'New Jersey'),('NM', 'New Mexico'),('NY', 'New York'),('NC', 'North Carolina'),('ND', 'North Dakota'),('OH', 'Ohio'),('OK', 'Oklahoma'),('OR', 'Oregon'),('PA', 'Pennsylvania'),('RI', 'Rhode Island'),('SC', 'South Carolina'),('SD', 'South Dakota'),('TN', 'Tennessee'),('TX', 'Texas'),('UT', 'Utah'),('VT', 'Vermont'),('VA', 'Virginia'),('WA', 'Washington'),('WV', 'West Virginia'),('WI', 'Wisconsin'),('WY', 'Wyoming')]
@@ -132,7 +132,7 @@ class addPO(forms.Form):
 
         ven = vendor.objects.get(pk = data['ven_id'])
 
-        purchase_order = po(part=data['part'], cost=data['cost'],
+        purchase_order = po(part=data['part'], cost=data['cost']*data['quant'],
             ven=ven, quant=data['quant'])
 
         purchase_order.save()
@@ -160,6 +160,37 @@ class addProduct(forms.ModelForm):
     class Meta:
         model = product
         fields = ['name', 'part_ids', 'part_quants', 'price']
+
+class pay(forms.Form):
+    helper = FormHelper()
+    helper.form_show_labels = False
+
+    l_employees = get_choices_list(employee)
+    emp_id = forms.ChoiceField(choices=l_employees, widget=forms.Select(attrs={'class': 'form-control'}))
+
+    def save(self):
+        data = self.cleaned_data
+
+        emp = employee.objects.get(pk = data['emp_id'])
+        fed, ss, med = get_withheld_amount(emp.salary)
+        sal_after_tax = round(emp.salary/12 - fed - ss - med,2)
+        amount_to_match = ss + med
+        
+        payroll.objects.create(emp=emp, fed=fed, ss=ss, med=med, sal_after_tax=sal_after_tax, amount_to_match=amount_to_match)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class MyForm(forms.Form):
     # part = forms.CharField(

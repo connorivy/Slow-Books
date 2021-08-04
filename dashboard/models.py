@@ -13,7 +13,7 @@ class employee(models.Model):
     zipcode = models.IntegerField()
     ssn = models.CharField(primary_key=True,max_length=18) 
     withholding = models.IntegerField()
-    salary = models.CharField(max_length=25)
+    salary = models.IntegerField()
 
     # definitely remove null and blank in the future to make the employer required
     employer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -105,10 +105,13 @@ class inventory(models.Model):
 class payroll(models.Model):
     date = models.DateTimeField(default=timezone.now)
     emp = models.ForeignKey(employee, on_delete=models.CASCADE)
-    total_cost = models.DecimalField(max_digits=8, decimal_places=2)
-    amount_witheld = models.DecimalField(max_digits=8, decimal_places=2)
-    
 
+    fed = models.DecimalField(max_digits=8, decimal_places=2)
+    ss = models.DecimalField(max_digits=8, decimal_places=2)
+    med = models.DecimalField(max_digits=8, decimal_places=2)
+    sal_after_tax = models.DecimalField(max_digits=8, decimal_places=2)
+    amount_to_match = models.DecimalField(max_digits=8, decimal_places=2)
+    
     def __str__(self):
         return f'{self.emp} {self.date}'
 
