@@ -67,7 +67,6 @@ def get_cash(initial, invoices, pos, payroll, inventory):
     tax = 0
     bills = 1250.00
     ann_exp = 13750.00
-    lib = 0
 
     for invoice in invoices:
         sales += invoice.price
@@ -89,7 +88,7 @@ def get_cash(initial, invoices, pos, payroll, inventory):
             vendor_entry = vendor.objects.get(pk=vendor_ids[index])
             cogs += vendor_entry.cost * invoice.quant * int(quants_in_inventory[index])
 
-    # cash += sales
+    cash += sales
 
     for po in pos:
         cash -= po.cost
@@ -108,14 +107,11 @@ def get_cash(initial, invoices, pos, payroll, inventory):
 
     gp = round(sales - cogs,2)
     expenses = round(float(pay)+float(tax)+float(bills)+float(ann_exp),2)
-    ar = sales
-    # inv -= 
 
     context = {
         'cash': round(cash,2),
         'inventory': round(inv,2),
-        'current_assets': round(cash+inv+ar,2),
-        'current_liabilities': lib,
+        'current_assets': round(cash+inv,2),
         'sales': round(sales, 2),
         'cogs': round(cogs, 2),
         'gp': gp,
@@ -125,8 +121,6 @@ def get_cash(initial, invoices, pos, payroll, inventory):
         'ann_exp': ann_exp,
         'expenses': expenses,
         'net_income': float(gp) - float(expenses),
-        'nw': round(float(cash)+float(inv)+float(ar)-float(lib),2),
-        'ar': round(ar,2),
     }
 
 
