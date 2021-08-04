@@ -18,3 +18,16 @@ def query_to_list(query, fields_to_ignore=None):
             print('sub_data', sub_data)
         data.append(sub_data)
     return data
+
+def get_choices_list(model):
+
+    query = model.objects.all()
+    ids = [obj.pk for obj in query]
+    name = [str(obj) for obj in query]
+    list = [( '', 'Choose...')]
+
+    for index in range(len(query)):
+        list.append((ids[index],f'{name[index]}'))
+
+    print(model, list)
+    return list

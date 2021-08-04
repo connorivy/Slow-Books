@@ -1,3 +1,4 @@
+from utils.model_to_dict import get_choices_list
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
@@ -90,30 +91,13 @@ class addInvoice(forms.Form):
     helper = FormHelper()
     helper.form_show_labels = False
 
-    # the next 8ish lines of code are embarrasing. I need to learn queries 
-    q_prods = product.objects.all().values()
-    prod_ids = [prod3['id'] for prod3 in q_prods]
-    name = [prod3['name'] for prod3 in q_prods]
-    l_prods = [( '', 'Choose...')]
-
-    for index in range(len(q_prods)):
-        l_prods.append((prod_ids[index],f'{name[index]}'))
+    l_prods = get_choices_list(product)
 
     prod_id = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control prodchoices'}),choices=l_prods)
 
     price = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control prodprice', 'readonly':''}))
 
-    # the next 10 lines of code are embarrasing. I need to learn queries 
-    q_customers = customer.objects.all().values()
-    cust_ids = [customer3['id'] for customer3 in q_customers]
-    fname = [customer3['fname'] for customer3 in q_customers]
-    lname = [customer3['lname'] for customer3 in q_customers]
-    l_customers = [( '', 'Choose...')]
-
-    for index in range(len(q_customers)):
-        l_customers.append((cust_ids[index],f'{fname[index]} {lname[index]}'))
-
-    # customers = customer.objects.filter(author=author).values_list('id', flat=True)
+    l_customers = get_choices_list(customer)
 
     cust_id = forms.ChoiceField(choices=l_customers, widget=forms.Select(attrs={'class': 'form-control'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -122,37 +106,36 @@ class addInvoice(forms.Form):
         data = self.cleaned_data
 
         cust = customer.objects.get(pk = data['cust_id'])
+        print('cust', type(cust))
         prod = product.objects.get(pk = data['prod_id'])
+        print('prod', prod)
         price = data['price'] * data['quant']
+        print('price', price)
 
-        inv = invoice(cust=cust, prod=prod,
-            quant=data['quant'], price=price)
-
-        inv.save()
+        invoice.objects.create(cust=cust, prod=prod, quant=data['quant'], price=price)
 
 
-class addPO(forms.ModelForm):
+class addPO(forms.Form):
     helper = FormHelper()
     helper.form_show_labels = False
 
     part = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control vendorpart', 'readonly':''}))
     cost = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control vendorcost', 'readonly':''}))
 
-    # the next 10 lines of code are embarrasing. I need to learn queries 
-    q_vendor = vendor.objects.all().values()
-    ids = [vendor3['id'] for vendor3 in q_vendor]
-    name = [vendor3['bizname'] for vendor3 in q_vendor]
-    l_vendors = [( '', 'Choose...')]
+    l_vendors = get_choices_list(vendor)
 
-    for index in range(len(q_vendor)):
-        l_vendors.append((ids[index],f'{name[index]}'))
-
-    ven = forms.ChoiceField(choices=l_vendors, widget=forms.Select(attrs={'class': 'form-control vendorchoices'}))
+    ven_id = forms.ChoiceField(choices=l_vendors, widget=forms.Select(attrs={'class': 'form-control vendorchoices'}))
     quant = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
-    class Meta:
-        model = po
-        fields = ['ven', 'part', 'cost', 'quant']
+    def save(self):
+        data = self.cleaned_data
+
+        ven = vendor.objects.get(pk = data['ven_id'])
+
+        purchase_order = po(part=data['part'], cost=data['cost'],
+            ven=ven, quant=data['quant'])
+
+        purchase_order.save()
 
 class addProduct(forms.ModelForm):
     helper = FormHelper()
@@ -162,7 +145,7 @@ class addProduct(forms.ModelForm):
 
     # the next 8ish lines of code are embarrasing. I need to learn queries 
     q_vendor = vendor.objects.all().values()
-    ids = [vendor3['id'] for vendor3 in q_vendor]
+    ids = [vendor3['bizname'] for vendor3 in q_vendor]
     name = [vendor3['part'] for vendor3 in q_vendor]
     l_parts = []
 

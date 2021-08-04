@@ -60,10 +60,6 @@ def customers(request):
             # print(f'\n\n\n {instance.cust} \n\n\n')
             # instance.save()
             invoiceform.save()
-            
-            prod = invoiceform.cleaned_data.get('prod')
-            cost = invoiceform.cleaned_data.get('cost')
-            quant = invoiceform.cleaned_data.get('quant')
 
             sub_inventory(request)
             return redirect('dashboard-invoice')
@@ -88,6 +84,7 @@ def vendors(request):
             bizname = vendorform.cleaned_data.get('bizname')
             messages.success(request, f'{bizname} added to vendors')
             # return redirect('dashboard-vendors')
+            
         if poform.is_valid():
             part = poform.cleaned_data.get('part')
             cost = poform.cleaned_data.get('cost')
@@ -115,8 +112,8 @@ def fillInVendorChoices(request):
         ven = request.GET.get("ven", None)
         # check for the vendor in the database.
         try:
-            part = vendor.objects.get(id = ven).part
-            cost = vendor.objects.get(id = ven).cost
+            part = vendor.objects.get(pk = ven).part
+            cost = vendor.objects.get(pk = ven).cost
         except:
             part = ''
             cost = ''
@@ -159,6 +156,7 @@ def inventoryView(request):
         'prodform': prodform,
         'inventory': inventory.objects.all().values()
     }
+    print('inventory', context['inventory'])
 
     return render(request, 'dashboard/inventory.html', context)
 
@@ -168,7 +166,7 @@ def fillInProdChoices(request):
         prod = request.GET.get("prod", None)
         # check for the vendor in the database.
         try:
-            price = product.objects.get(id = prod).price
+            price = product.objects.get(pk = prod).price
         except:
             price = ''
         return JsonResponse({"price":price}, status = 200)

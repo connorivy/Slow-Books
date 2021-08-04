@@ -11,7 +11,7 @@ class employee(models.Model):
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
     zipcode = models.IntegerField()
-    ssn = models.CharField(max_length=18) 
+    ssn = models.CharField(primary_key=True,max_length=18) 
     withholding = models.IntegerField()
     salary = models.CharField(max_length=25)
 
@@ -26,7 +26,7 @@ class customer(models.Model):
     lname = models.CharField(max_length=25)
     email = models.EmailField()
     phoneNumberRegex = RegexValidator(regex = r"^\+?1?\d{8,15}$")
-    phone = models.CharField(validators = [phoneNumberRegex], max_length = 16, unique = True)
+    phone = models.CharField(primary_key=True, validators = [phoneNumberRegex], max_length = 16, unique = True)
     add1 = models.CharField(max_length=50)
     add2 = models.CharField(max_length=10, null=True, blank=True)
     city = models.CharField(max_length=20)
@@ -38,7 +38,7 @@ class customer(models.Model):
         return f'{self.fname} {self.lname}'
 
 class vendor(models.Model):
-    bizname = models.CharField(max_length=25)
+    bizname = models.CharField(primary_key=True, max_length=25)
     part = models.CharField(max_length=25)
     cost = models.DecimalField(max_digits=10, decimal_places=4)
     fname = models.CharField(max_length=25, null=True, blank=True)
@@ -54,10 +54,10 @@ class vendor(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f'{self.fname} {self.lname}'
+        return f'{self.bizname}'
 
 class product(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(primary_key=True, max_length=25)
     part_ids = models.CharField(max_length=25)
     part_quants = models.CharField(max_length=25)
     price = models.DecimalField(max_digits=10, decimal_places=4)
@@ -80,7 +80,7 @@ class invoice(models.Model):
         return f'{self.invoice_num}'
 
 class po(models.Model):
-    ven = models.CharField(max_length=25)
+    ven = models.ForeignKey(vendor, on_delete=models.CASCADE)
     part = models.CharField(max_length=25)
     quant = models.IntegerField()
     cost = models.DecimalField(max_digits=10, decimal_places=4)
@@ -101,5 +101,15 @@ class inventory(models.Model):
 
     def __str__(self):
         return f'{self.quant} {self.part}'
+
+class payroll(models.Model):
+    date = models.DateTimeField(default=timezone.now)
+    emp = models.ForeignKey(employee, on_delete=models.CASCADE)
+    total_cost = models.DecimalField(max_digits=8, decimal_places=2)
+    amount_witheld = models.DecimalField(max_digits=8, decimal_places=2)
+    
+
+    def __str__(self):
+        return f'{self.emp} {self.date}'
 
 
