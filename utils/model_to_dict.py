@@ -56,3 +56,25 @@ def get_withheld_amount(salary):
         fed = salary * .1
 
     return fed/12, ss/12, medicare/12
+
+def get_cash(initial, invoices, pos, payroll, inventory):
+    cash = initial 
+    inv = 0
+
+    for invoice in invoices:
+        cash += invoice.price
+    for po in pos:
+        cash -= po.cost
+
+    for item in inventory:
+        inv += item.value
+
+    for item in payroll:
+        cash -= item.sal_after_tax
+        cash -= item.fed
+        cash -= item.ss
+        cash -= item.med
+        cash -= item.amount_to_match
+
+
+    return round(cash,2), round(inv,2)

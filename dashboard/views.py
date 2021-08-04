@@ -4,14 +4,21 @@ from django.contrib import messages
 from django.core import serializers
 from django.urls import reverse
 from urllib.parse import urlencode
-from .models import employee, customer, payroll, product, vendor, invoice, po, inventory
-from .forms import addEmployee, addCustomer, addVendor, addInvoice, addPO, addProduct, MyForm, pay
+from .models import *
+from .forms import *
 from utils.update_inventory import *
 from utils.model_to_dict import *
 
 # Create your views here.
 def home(request):
-    return render(request,'dashboard/home.html')
+    cash, inv = get_cash(200000, invoice.objects.all(), po.objects.all(), payroll.objects.all(), inventory.objects.all())
+    
+    context = {
+        'cash': cash,
+        'inventory': inv,
+        'current_assets': cash+inv,
+    }
+    return render(request,'dashboard/home.html', context)
 
 def employees(request):
     if request.method == 'POST':

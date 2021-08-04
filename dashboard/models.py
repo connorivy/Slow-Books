@@ -115,4 +115,15 @@ class payroll(models.Model):
     def __str__(self):
         return f'{self.emp} {self.date}'
 
+class balancesheet(models.Model):
+    cash = models.DecimalField(max_digits=8, decimal_places=2)
+    # acounts_recievable = models.DecimalField(max_digits=8, decimal_places=2)
+    # building = models.DecimalField(max_digits=8, decimal_places=2)
+    # med = models.DecimalField(max_digits=8, decimal_places=2)
+    # sal_after_tax = models.DecimalField(max_digits=8, decimal_places=2)
+    # amount_to_match = models.DecimalField(max_digits=8, decimal_places=2)
+    
+    # def __str__(self):
+    #     return f'{self.emp} {self.date}'
+
 
