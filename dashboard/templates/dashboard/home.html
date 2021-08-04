@@ -29,100 +29,6 @@
                 <!-- ============================================================== -->
                 <!-- Sales Cards  -->
                 <!-- ============================================================== -->
-                <div class="row">
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-3 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-cyan text-center" onclick="showForm('form1')">
-                                <h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
-                                <h6 class="text-white">Dashboard</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-3 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-success text-center" onclick="showForm('form2')">
-                                <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
-                                <h6 class="text-white">Charts</h6>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Column -->
-                    <div class="col-md-6 col-lg-3 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-warning text-center" onclick="showForm('form3')">
-                                <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Widgets</h6>
-                            </div>
-                            <!-- <button type="button" class="box btn btn-warning text-center">
-                                <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
-                                <h6 class="text-white">Widgets</h6>
-                            </button> -->
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <div class="col-md-6 col-lg-3 col-xlg-3">
-                        <div class="card card-hover">
-                            <div class="box bg-danger text-center" onclick="showForm('form4')">
-                                <h1 class="font-light text-white"><i class="mdi mdi-border-outside"></i></h1>
-                                <h6 class="text-white">Tables</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Column -->
-                    <!-- Column -->
-                    <!-- Column -->
-                </div>
-
-                <div class="card" id="form1" style="display: none;">
-                    <form class="form-horizontal">
-                        <div class="card-body">
-                            <h4 class="card-title">Add Employee</h4>
-                            <div class="form-group row">
-                                <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="fname" placeholder="First Name Here">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="lname" placeholder="Last Name Here">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="lname" class="col-sm-3 text-right control-label col-form-label">Password</label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="lname" placeholder="Password Here">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="email1" class="col-sm-3 text-right control-label col-form-label">Company</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="email1" placeholder="Company Name Here">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Contact No</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="cono1" placeholder="Contact No Here">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Message</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border-top">
-                            <div class="card-body">
-                                <button type="button" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
 
                 <div class="row">
                     <div class="col-12">
@@ -158,7 +64,7 @@
                                                         Accounts Recievable:
                                                     </div>
                                                     <div class="col-md-5 text-right">
-                                                        $0.00
+                                                        ${{ ar }}
                                                     </div>
                                                 </div>
                                                 <div class="card-body widget-content row">
@@ -233,7 +139,7 @@
                                                     <span>Total Current Liabilities</span>
                                                 </a>
                                                 <div class="card-header col-md-6 text-right">
-                                                    $0.00
+                                                    ${{ current_liabilities }}
                                                 </div>
                                             </div>
                                             <div id="Toggle-3" class="collapse show multi-collapse">
@@ -243,7 +149,7 @@
                                                         Accounts Payable:
                                                     </div>
                                                     <div class="col-md-5 text-right">
-                                                        $0.00
+                                                        ${{ current_liabilities }}
                                                     </div>
                                                 </div>
                                                 <div class="card-body widget-content row">
@@ -319,7 +225,7 @@
                                                 Total Liabilities:    
                                             </div>
                                             <div class="card-header col-md-3 font-bold text-right">
-                                                $0.00  
+                                                ${{ current_liabilities }} 
                                             </div>
                                         </div>
                                     </div>
@@ -333,7 +239,7 @@
                                                 Net Worth:    
                                             </div>
                                             <div class="card-header col-md-3 font-bold text-right">
-                                                ${{ current_assets }}  
+                                                ${{ nw }}  
                                             </div>
                                         </div>
                                     </div>

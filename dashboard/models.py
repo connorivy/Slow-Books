@@ -58,7 +58,7 @@ class vendor(models.Model):
 
 class product(models.Model):
     name = models.CharField(primary_key=True, max_length=25)
-    part_ids = models.CharField(max_length=25)
+    part_ids = models.CharField(max_length=150)
     part_quants = models.CharField(max_length=25)
     price = models.DecimalField(max_digits=10, decimal_places=4)
     
@@ -96,7 +96,7 @@ class inventory(models.Model):
     quant = models.IntegerField()
     costper = models.DecimalField(max_digits=10, decimal_places=4)
     value = models.DecimalField(max_digits=10, decimal_places=2)
-    threshold = models.IntegerField(null=True, blank=True)
+    threshold = models.CharField(max_length=2, null=True, blank=True)
     
 
     def __str__(self):

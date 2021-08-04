@@ -193,7 +193,7 @@ def transactions(request):
 
     context = {
         'invoices': query_to_list(invoice.objects.all(),['paid']),
-        'pos': query_to_list(po.objects.all(),['paid']),
+        'pos': query_to_list(po.objects.all(),['id','paid']),
         'pays': query_to_list(payroll.objects.all(),['id'])
     }
     print('payrolls', context['pays'])

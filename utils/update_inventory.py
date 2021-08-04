@@ -31,8 +31,11 @@ def sub_inventory(request):
     # vendor_ids.split("'")
     vendor_ids = vendor_ids.split(",")
 
+    print(vendor_ids)
     for index in range(len(vendor_ids)):
-        vendor_entry = vendor.objects.get(id=vendor_ids[index])
+        vendor_ids[index] = vendor_ids[index].strip(' ')
+        print(vendor_ids[index])
+        vendor_entry = vendor.objects.get(pk=vendor_ids[index])
         part_in_inventory = inventory.objects.get(part=vendor_entry.part)
 
         part_in_inventory.value -= vendor_entry.cost * inv.quant * int(quants_in_inventory[index])
